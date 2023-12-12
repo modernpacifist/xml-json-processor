@@ -10,6 +10,7 @@ packages = [{include = "xml_json_processor"}]
 python = "^3.10"
 dateparser = "^1.2.0"
 uvicorn = {extras = ["standard"], version = "^0.24.0.post1"}
+fastapi = "^0.105.0"
 
 
 [tool.poetry.group.dev.dependencies]
