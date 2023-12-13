@@ -6,7 +6,7 @@ app = fastapi.FastAPI()
 
 @app.get("/")
 async def read_root():
-    return {"hello": "world"}
+    return {"status": "healthy"}
 
 
 @app.get("/api/json")
