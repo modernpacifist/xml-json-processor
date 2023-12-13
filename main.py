@@ -17,11 +17,3 @@ async def process_json():
 @app.get("/api/xml")
 async def process_xml():
     return {"hello": "world"}
-
-
-def main():
-    app.run()
-
-
-if __name__ == "__main__":
-    main()
