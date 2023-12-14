@@ -1,10 +1,12 @@
 # import fastapi
 from fastapi import FastAPI
-# from fastapi_xml import XmlBody, XmlResponse
+from fastapi_xml import XmlBody, XmlResponse
 
 from models import DataModel
 from formathandler import FormatHandler, JsonProcessingStrategy, XmlProcessingStrategy
 
+# local
+import data_preprocessing
 
 app = FastAPI()
 
@@ -21,9 +23,8 @@ async def read_root():
 async def process_json(model: DataModel):
     CONTEXT.strategy = JsonProcessingStrategy()
 
-    print(model)
-
-
+    h = data_preprocessing.process_date(model.date)
+    print(h)
 
     result = CONTEXT.process("json_data")
 
