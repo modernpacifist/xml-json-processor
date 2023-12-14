@@ -1,6 +1,6 @@
 # import fastapi
 from fastapi import FastAPI
-from fastapi_xml import XmlBody, XmlResponse
+from fastapi_xml import XmlBody, XmlResponse, NonJsonRoute,XmlAppResponse
 
 from models import DataModel
 from formathandler import FormatHandler, JsonProcessingStrategy, XmlProcessingStrategy

@@ -7,7 +7,7 @@ readme = "README.md"
 packages = [{include = "xml_json_processor"}]
 
 [tool.poetry.dependencies]
-python = "^3.10"
+python = "^3.9"
 dateparser = "^1.2.0"
 uvicorn = {extras = ["standard"], version = "^0.24.0.post1"}
 fastapi = "^0.105.0"
