@@ -1,6 +1,6 @@
 from pydantic import BaseModel
 
 
-class JsonModel(BaseModel):
+class DataModel(BaseModel):
     date: str
     randomValue: int

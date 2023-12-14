@@ -1,10 +1,12 @@
-import fastapi
+# import fastapi
+from fastapi import FastAPI
+# from fastapi_xml import XmlBody, XmlResponse
 
-from models import JsonModel
+from models import DataModel
 from formathandler import FormatHandler, JsonProcessingStrategy, XmlProcessingStrategy
 
 
-app = fastapi.FastAPI()
+app = FastAPI()
 
 
 CONTEXT = FormatHandler(None)
@@ -16,18 +18,21 @@ async def read_root():
 
 
 @app.post("/api/json")
-async def process_json(model: JsonModel):
+async def process_json(model: DataModel):
     CONTEXT.strategy = JsonProcessingStrategy()
 
     print(model)
+
+
 
     result = CONTEXT.process("json_data")
 
     return result
 
 
-@app.get("/api/xml")
-async def process_xml():
+# @app.post("/api/xml", response_class=XMLResponse, content_type="application/xml")
+@app.post("/api/xml")
+async def process_xml(model: DataModel):
     CONTEXT.strategy = XmlProcessingStrategy()
 
     return CONTEXT.process("xml_data")
