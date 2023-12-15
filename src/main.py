@@ -17,14 +17,16 @@ async def read_root():
 @app.post("/api/tree", status_code=200)
 async def process_tree(model: AnyFormatModel, response: Response):
     # processed_data = ""
+    if model.format:
+        if model.js_data is not None:
+            CONTEXT.strategy = JsonProcessingStrategy()
+            print("json chosen")
 
-    if model.js_data is not None:
-        CONTEXT.strategy = JsonProcessingStrategy()
-        print("json chosen")
-
-    if model.xml_data is not None:
-        CONTEXT.strategy = XmlProcessingStrategy()
-        print("xml chosen")
+        if model.xml_data is not None:
+            CONTEXT.strategy = XmlProcessingStrategy()
+            print("xml chosen")
+    
+    
 
 
     return {"result": CONTEXT.process(model.js_data)}
