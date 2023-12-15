@@ -44,5 +44,4 @@ async def process_tree(model: AnyFormatModel):
 
     print(model.format)
     
-    
     return CONTEXT.process(model.data)
