@@ -37,3 +37,11 @@ async def process_xml(model: DataModel):
     CONTEXT.strategy = XmlProcessingStrategy()
 
     return CONTEXT.process("xml_data")
+
+
+# @app.post("/api/xml", response_class=XMLResponse, content_type="application/xml")
+@app.post("/api/tree")
+async def process_tree(model: DataModel):
+    # CONTEXT.strategy = XmlProcessingStrategy()
+
+    return CONTEXT.process("xml_data")
