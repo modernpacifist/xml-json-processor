@@ -7,7 +7,7 @@ from abc import ABC, abstractmethod
 import data_preprocessing
 
 
-class FormatHandler:
+class FormatProcessor:
     def __init__(self, strategy):
         self._strategy = strategy
 

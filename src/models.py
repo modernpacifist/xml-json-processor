@@ -1,4 +1,5 @@
 from pydantic import BaseModel, Json
+from typing import Optional
 
 
 class DataModel(BaseModel):
@@ -11,5 +12,6 @@ class JsonModel(BaseModel):
 
 
 class AnyFormatModel(BaseModel):
-    format: str = "json | xml"
-    data: str = '{"date": "12.12.2023"}'
+    js_data: Optional[str] = None
+    xml_data: Optional[str] = None
+    data: Optional[str] = None
