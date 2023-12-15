@@ -1,6 +1,10 @@
 import json
+import xml.etree.ElementTree as ET
 
 from abc import ABC, abstractmethod
+
+# local
+import data_preprocessing
 
 
 class FormatHandler():
@@ -27,9 +31,27 @@ class Strategy(ABC):
 
 class JsonProcessingStrategy(Strategy):
     def process(self, data):
-        return json.loads(data)
+        res = ""
+
+        try: 
+            res = json.loads(data)
+            
+        except Exception as e:
+            print(e)
+            res = str(e)
+
+        return res
 
 
 class XmlProcessingStrategy(Strategy):
     def process(self, data):
-        return {"XmlProcessor": data}
+        res = ""
+
+        try:
+            root = ET.fromstring(data)
+
+        except Exception as e:
+            print(e)
+            res = str(e)
+
+        return res

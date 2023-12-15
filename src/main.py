@@ -1,11 +1,9 @@
-# import fastapi
-from fastapi import FastAPI
+import time
 
-from models import AnyFormatModel, DataModel
+from fastapi import FastAPI, Request, Response, status
+from models import AnyFormatModel
 from formathandler import FormatHandler, JsonProcessingStrategy, XmlProcessingStrategy
 
-# local
-import data_preprocessing
 
 app = FastAPI()
 
@@ -13,35 +11,33 @@ app = FastAPI()
 CONTEXT = FormatHandler(None)
 
 
+# @app.middleware("http")
+# async def process_format(request: Request, call_next):
+    # start_time = time.time()
+    # response = await call_next(request)
+    # process_time = time.time() - start_time
+    # response.headers["X-Process-Time"] = str(process_time)
+    # return response
+
+
 @app.get("/")
 async def read_root():
     return {"status": "healthy"}
 
 
-@app.post("/api/json")
-async def process_json(model: DataModel):
-    CONTEXT.strategy = JsonProcessingStrategy()
+@app.post("/api/tree", status_code=200)
+async def process_tree(model: AnyFormatModel, response: Response):
+    match model.format:
+        case "json":
+            CONTEXT.strategy = JsonProcessingStrategy()
+            print("json chosen")
 
-    h = data_preprocessing.process_date(model.date)
-    print(h)
+        case "xml":
+            CONTEXT.strategy = XmlProcessingStrategy()
+            print("xml chosen")
 
-    result = CONTEXT.process("json_data")
-
-    return result
-
-
-# @app.post("/api/xml", response_class=XMLResponse, content_type="application/xml")
-@app.post("/api/xml")
-async def process_xml(model: DataModel):
-    CONTEXT.strategy = XmlProcessingStrategy()
-
-    return CONTEXT.process("xml_data")
-
-
-@app.post("/api/tree")
-async def process_tree(model: AnyFormatModel):
-    CONTEXT.strategy = XmlProcessingStrategy()
-
-    print(model.format)
+        case _:
+            response.status_code = status.HTTP_400_BAD_REQUEST
+            return {"result": "only json and xml formats are supported"}
     
-    return CONTEXT.process(model.data)
+    return {"result": CONTEXT.process(model.data)}

@@ -1,4 +1,4 @@
-from pydantic import BaseModel
+from pydantic import BaseModel, Json
 
 
 class DataModel(BaseModel):
@@ -6,6 +6,10 @@ class DataModel(BaseModel):
     randomValue: int
 
 
+class JsonModel(BaseModel):
+    date: str = '{"date": "12.12.2023"}'
+
+
 class AnyFormatModel(BaseModel):
     format: str = 'json | xml'
-    data: str
+    data: str = '{"date": "12.12.2023"}'
