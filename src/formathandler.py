@@ -1,3 +1,5 @@
+import json
+
 from abc import ABC, abstractmethod
 
 
@@ -25,7 +27,7 @@ class Strategy(ABC):
 
 class JsonProcessingStrategy(Strategy):
     def process(self, data):
-        return {"jsonProcessor": data}
+        return json.loads(data)
 
 
 class XmlProcessingStrategy(Strategy):

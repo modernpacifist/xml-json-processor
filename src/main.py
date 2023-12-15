@@ -1,8 +1,7 @@
 # import fastapi
 from fastapi import FastAPI
-from fastapi_xml import XmlBody, XmlResponse, NonJsonRoute,XmlAppResponse
 
-from models import DataModel
+from models import AnyFormatModel, DataModel
 from formathandler import FormatHandler, JsonProcessingStrategy, XmlProcessingStrategy
 
 # local
@@ -39,9 +38,11 @@ async def process_xml(model: DataModel):
     return CONTEXT.process("xml_data")
 
 
-# @app.post("/api/xml", response_class=XMLResponse, content_type="application/xml")
 @app.post("/api/tree")
-async def process_tree(model: DataModel):
-    # CONTEXT.strategy = XmlProcessingStrategy()
+async def process_tree(model: AnyFormatModel):
+    CONTEXT.strategy = XmlProcessingStrategy()
 
-    return CONTEXT.process("xml_data")
+    print(model.format)
+    
+    
+    return CONTEXT.process(model.data)
