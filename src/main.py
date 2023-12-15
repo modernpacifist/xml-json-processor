@@ -16,18 +16,19 @@ async def read_root():
 
 @app.post("/api/tree", status_code=200)
 async def process_tree(model: AnyFormatModel, response: Response):
-    # processed_data = ""
-    if model.format:
-        if model.js_data is not None:
+    match model.format:
+        case "json":
             CONTEXT.strategy = JsonProcessingStrategy()
             print("json chosen")
 
-        if model.xml_data is not None:
+        case "xml":
             CONTEXT.strategy = XmlProcessingStrategy()
             print("xml chosen")
-    
-    
+
+        case _:
+            print("None chosen")
+            response.status_code = status.HTTP_400_BAD_REQUEST
 
 
-    return {"result": CONTEXT.process(model.js_data)}
-    # return {"result": processed_data}
+    # return {"result": CONTEXT.process(model.js_data)}
+    return {"result": processed_data}
