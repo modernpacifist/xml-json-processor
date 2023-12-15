@@ -7,7 +7,7 @@ from abc import ABC, abstractmethod
 import data_preprocessing
 
 
-class FormatHandler():
+class FormatHandler:
     def __init__(self, strategy):
         self._strategy = strategy
 
@@ -33,9 +33,9 @@ class JsonProcessingStrategy(Strategy):
     def process(self, data):
         res = ""
 
-        try: 
+        try:
             res = json.loads(data)
-            
+
         except Exception as e:
             print(e)
             res = str(e)

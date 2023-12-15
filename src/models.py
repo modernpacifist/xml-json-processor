@@ -11,5 +11,5 @@ class JsonModel(BaseModel):
 
 
 class AnyFormatModel(BaseModel):
-    format: str = 'json | xml'
+    format: str = "json | xml"
     data: str = '{"date": "12.12.2023"}'

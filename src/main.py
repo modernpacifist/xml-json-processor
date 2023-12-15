@@ -13,11 +13,11 @@ CONTEXT = FormatHandler(None)
 
 # @app.middleware("http")
 # async def process_format(request: Request, call_next):
-    # start_time = time.time()
-    # response = await call_next(request)
-    # process_time = time.time() - start_time
-    # response.headers["X-Process-Time"] = str(process_time)
-    # return response
+# start_time = time.time()
+# response = await call_next(request)
+# process_time = time.time() - start_time
+# response.headers["X-Process-Time"] = str(process_time)
+# return response
 
 
 @app.get("/")
@@ -39,5 +39,5 @@ async def process_tree(model: AnyFormatModel, response: Response):
         case _:
             response.status_code = status.HTTP_400_BAD_REQUEST
             return {"result": "only json and xml formats are supported"}
-    
+
     return {"result": CONTEXT.process(model.data)}
