@@ -4,21 +4,19 @@ import xml.etree.ElementTree as ET
 
 
 def determine_format(data):
-    if data.startswith("{") and data.endswith("}"):
-        try:
-            json.loads(data)
-            return "json"
+    try:
+        json.loads(data)
+        return "json"
 
-        except ValueError:
-            pass
+    except ValueError:
+        pass
 
-    if data.startswith("<") and data.endswith(">"):
-        try:
-            ET.fromstring(data)
-            return "xml"
-        
-        except ET.ParseError:
-            pass
+    try:
+        ET.fromstring(data)
+        return "xml"
+    
+    except ET.ParseError:
+        pass
 
     return "Unknown"
 

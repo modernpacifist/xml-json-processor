@@ -34,7 +34,16 @@ class JsonProcessingStrategy(Strategy):
         res = ""
 
         try:
-            res = json.loads(data)
+            js_object = json.loads(data)
+            print(js_object)
+
+            if 'date' in js_object.keys():
+                js_object['date'] = data_processing.process_date(js_object['date'])
+
+            print(type(js_object))
+
+            res = js_object
+            # print(type(js_object['date']))
 
         except Exception as e:
             print(e)

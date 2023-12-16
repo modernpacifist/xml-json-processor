@@ -12,5 +12,4 @@ class JsonModel(BaseModel):
 
 
 class AnyFormatModel(BaseModel):
-    format: str
     tree: str
