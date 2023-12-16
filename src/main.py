@@ -1,7 +1,8 @@
-from fastapi import FastAPI, Response, status
+from fastapi import FastAPI, Response, status, Request
 from models import AnyFormatModel
 from formathandler import FormatProcessor, JsonProcessingStrategy, XmlProcessingStrategy
 
+import xml.etree.ElementTree as ET
 
 app = FastAPI()
 
@@ -32,3 +33,16 @@ async def process_tree(model: AnyFormatModel, response: Response):
     processed_data = CONTEXT.process(model.tree)
 
     return {"result": processed_data}
+
+
+@app.post("/xml_handler", status_code=200)
+async def xml_handler(request: Request):
+    xml_data = await request.body()
+    root = ET.fromstring(xml_data)
+    # Process the XML data
+    for i in root:
+        print(f"{i.tag}: {root.find(i.tag).text}")
+
+
+    return {"message": "XML data processed successfully"}
+
