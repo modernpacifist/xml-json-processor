@@ -58,6 +58,10 @@ class XmlProcessingStrategy(Strategy):
 
         try:
             root = ET.fromstring(data)
+
+            if 'date' in root.attrib:
+                print('hehe')
+
             for i in root:
                 value = root.find(i.tag)
                 if value is None:
