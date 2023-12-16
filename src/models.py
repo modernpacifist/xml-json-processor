@@ -1,14 +1,4 @@
-from pydantic import BaseModel, Json
-from typing import Optional
-
-
-class DataModel(BaseModel):
-    date: str
-    randomValue: int
-
-
-class JsonModel(BaseModel):
-    date: str = '{"date": "12.12.2023"}'
+from pydantic import BaseModel
 
 
 class AnyFormatModel(BaseModel):

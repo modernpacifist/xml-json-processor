@@ -1,8 +1,7 @@
-from fastapi import FastAPI, Response, status, Request
+from fastapi import FastAPI, Response, status
 from models import AnyFormatModel
 from formathandler import FormatProcessor, JsonProcessingStrategy, XmlProcessingStrategy
 
-import xml.etree.ElementTree as ET
 import data_processing
 
 app = FastAPI()
