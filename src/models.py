@@ -12,7 +12,5 @@ class JsonModel(BaseModel):
 
 
 class AnyFormatModel(BaseModel):
-    # js_data: Optional[str] = None
-    # xml_data: Optional[str] = None
     format: str
     tree: str
