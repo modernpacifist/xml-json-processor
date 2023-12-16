@@ -49,6 +49,12 @@ class XmlProcessingStrategy(Strategy):
 
         try:
             root = ET.fromstring(data)
+            for i in root:
+                value = root.find(i.tag)
+                if value is None:
+                    continue
+
+                print(f"{i.tag}: {value.text}")
 
         except Exception as e:
             print(e)
