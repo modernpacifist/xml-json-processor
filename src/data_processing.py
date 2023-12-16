@@ -21,14 +21,11 @@ def determine_format(data):
     return "Unknown"
 
 
-def process_date(date):
-    res = ""
+def process_date(date_string):
     try:
-        res = dateparser.parse(date, date_formats=["%d.%m %H:%M"])
+        dt_object = dateparser.parse(date_string, date_formats=["%d.%m.%Y"])
+        return dt_object.strftime("%m-%d-%Y")
 
     except Exception as e:
         print(e)
-        res = ""
-
-    finally:
-        return res
+        return ""

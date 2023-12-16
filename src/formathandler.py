@@ -1,5 +1,6 @@
 import json
 import xml.etree.ElementTree as ET
+import xmltodict
 
 from abc import ABC, abstractmethod
 
@@ -31,8 +32,6 @@ class Strategy(ABC):
 
 class JsonProcessingStrategy(Strategy):
     def process(self, data):
-        res = ""
-
         try:
             js_object = json.loads(data)
             print(js_object)
@@ -42,35 +41,25 @@ class JsonProcessingStrategy(Strategy):
 
             print(type(js_object))
 
-            res = js_object
-            # print(type(js_object['date']))
+            return js_object
 
         except Exception as e:
             print(e)
-            res = str(e)
-
-        return res
 
 
 class XmlProcessingStrategy(Strategy):
     def process(self, data):
-        res = ""
-
         try:
             root = ET.fromstring(data)
 
-            if 'date' in root.attrib:
-                print('hehe')
+            tags = [i.tag for i in root]
 
-            for i in root:
-                value = root.find(i.tag)
-                if value is None:
-                    continue
+            if "date" in tags:
+                el = root.find("date")
+                if el is not None:
+                    el.text = data_processing.process_date(el.text)
 
-                print(f"{i.tag}: {value.text}")
+            return xmltodict.parse(ET.tostring(root))["root"]
 
         except Exception as e:
             print(e)
-            res = str(e)
-
-        return res

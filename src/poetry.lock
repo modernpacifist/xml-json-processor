@@ -872,7 +872,19 @@ files = [
     {file = "websockets-12.0.tar.gz", hash = "sha256:81df9cbcbb6c260de1e007e58c011bfebe2dafc8435107b0537f393dd38c8b1b"},
 ]
 
+[[package]]
+name = "xmltodict"
+version = "0.13.0"
+description = "Makes working with XML feel like you are working with JSON"
+category = "main"
+optional = false
+python-versions = ">=3.4"
+files = [
+    {file = "xmltodict-0.13.0-py2.py3-none-any.whl", hash = "sha256:aa89e8fd76320154a40d19a0df04a4695fb9dc5ba977cbb68ab3e4eb225e7852"},
+    {file = "xmltodict-0.13.0.tar.gz", hash = "sha256:341595a488e3e01a85a9d8911d8912fd922ede5fecc4dce437eb4b6c8d037e56"},
+]
+
 [metadata]
 lock-version = "2.0"
 python-versions = "^3.9"
-content-hash = "29b29a4480857d4fc488580c4fd98cc6ea8960142cf9e1ced3156fc30e63e6b4"
+content-hash = "92c7d14984bce1aa1bf48a000eb8731b53c1f8a1647a3ba2c48c90080f642468"
