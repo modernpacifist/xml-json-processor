@@ -10,6 +10,25 @@ app = FastAPI()
 CONTEXT = FormatProcessor(None)
 
 
+@app.middleware("http")
+async def determine_header_type(request: Request, call_next):
+    # Get the header from the request
+    header = request.headers.get("Content-Type")
+
+    # Determine the header type
+    if header == "application/json":
+        request.state.header_type = "json"
+    elif header == "application/xml":
+        request.state.header_type = "xml"
+    else:
+        request.state.header_type = "unknown"
+
+    # Call the next middleware or route handler
+    response = await call_next(request)
+
+    return response
+
+
 @app.get("/")
 async def read_root():
     return {"status": "healthy"}
