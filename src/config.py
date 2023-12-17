@@ -7,4 +7,4 @@ logging.basicConfig(
     handlers=[logging.FileHandler("/tmp/xml-json-processor.log"), logging.StreamHandler()],
 )
 
-# LOGGER = logging.getLogger(__name__)
+LOGGER = logging.getLogger(__name__)

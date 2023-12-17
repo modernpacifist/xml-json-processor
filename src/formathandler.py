@@ -63,3 +63,24 @@ class XmlProcessingStrategy(Strategy):
 
         except Exception as e:
             print(e)
+
+
+
+def determine_format(data):
+    try:
+        json.loads(data)
+        return "json"
+
+    except ValueError:
+        LOGGER.warning("determine_format: could not load data as json")
+        pass
+
+    try:
+        ET.fromstring(data)
+        return "xml"
+    
+    except ET.ParseError:
+        LOGGER.warning("determine_format: could not load data as xml")
+        pass
+
+    return "Unknown"

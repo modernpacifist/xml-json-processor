@@ -1,30 +1,12 @@
-import logging
 import dateparser
 import json
 import xml.etree.ElementTree as ET
 
+from config import LOGGER
 
-LOGGER = logging.getLogger(__name__)
+# LOGGER = logging.getLogger(__name__)
 
 
-def determine_format(data):
-    try:
-        json.loads(data)
-        return "json"
-
-    except ValueError:
-        LOGGER.warning("determine_format: could not load data as json")
-        pass
-
-    try:
-        ET.fromstring(data)
-        return "xml"
-    
-    except ET.ParseError:
-        LOGGER.warning("determine_format: could not load data as xml")
-        pass
-
-    return "Unknown"
 
 
 def process_date(date_string):
