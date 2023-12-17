@@ -55,19 +55,6 @@ class JsonProcessingStrategy(Strategy):
         except Exception as e:
             LOGGER.error(e)
 
-    # @singledispatch
-    # def process(self, data):
-        # pass
-
-    # @process.register(str)
-    def _(self, data):
-        try:
-            return self.process_entity(data)
-
-        except Exception as e:
-            LOGGER.error(e)
-
-    # @process.register(list)
     def process(self, data):
         res = []
         try:
