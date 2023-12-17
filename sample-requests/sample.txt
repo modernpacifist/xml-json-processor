@@ -1,0 +1,38 @@
+"<?xml version=\"1.0\" encoding=\"UTF-8\" ?> <root> <date>12.10.2023 16:00</date> </root>"
+"{ \"date\": \"1 февраля 2022 16:00\", \"deadline\": \"2 года\", \"randomValue\": 0 }"
+"{ \"date\": \"1 февраля 2022 16:00\", \"deadline\": \"в течении 30 дней со дня подписания договора\" }"
+"{ \"date\": \"1 февраля 2022 16:00\", \"deadline\": \"30 дней\" }"
+
+
+["{ \"date\": \"1 февраля 2022 16:00\", \"deadline\": \"в течении 3 лет со дня подписания договора\" }", "{ \"date\": \"1 февраля 2022 16:00\", \"deadline\": \"в течении 3 лет со дня подписания договора\" }"]
+
+
+{
+  "tree": [
+    "{ \"date\": \"1 февраля 2022 16:00\", \"deadline\": \"30 дней\" }",
+    "{ \"date\": \"1 февраля 2022 16:00\", \"deadline\": \"40 дней\" }"
+  ]
+}
+
+{
+  "tree": [
+    "{ \"date\": \"1 февраля 2022 16:00\" }",
+    "{ \"seller\": \"Sample Name\", \"deadline\": \"40 дней\" }"
+  ]
+}
+
+{
+  "tree": [
+    "<?xml version=\"1.0\" encoding=\"UTF-8\" ?> <root> <date>12.10.2023 16:00</date> </root>",
+    "<?xml version=\"1.0\" encoding=\"UTF-8\" ?> <root> <date>12.10.2023 16:00</date> </root>"
+  ]
+}
+
+{
+  "tree": [
+    "<?xml version=\"1.0\" encoding=\"UTF-8\" ?> <root> <date>12.10.2023 16:00</date> </root>",
+    "<?xml version=\"1.0\" encoding=\"UTF-8\" ?> <root> <deadline>30 days</deadline> </root>",
+    "<?xml version=\"1.0\" encoding=\"UTF-8\" ?> <root> <date>12.10.2023 16:00</date> <deadline>40 days</deadline> </root>"
+  ]
+}
+
