@@ -50,7 +50,6 @@ def process_deadline(deadline_string):
         units = match.group("units")
 
         k = find_key(date_units_map, units)
-        print(k)
 
         match k:
             case "day":

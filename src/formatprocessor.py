@@ -1,9 +1,10 @@
 import json
-from logging import getLogger
 import xml.etree.ElementTree as ET
 import xmltodict
 
 from abc import ABC, abstractmethod
+from logging import getLogger
+from functools import singledispatch
 
 # local
 import data_processing
@@ -39,7 +40,7 @@ class Strategy(ABC):
 
 
 class JsonProcessingStrategy(Strategy):
-    def process(self, data):
+    def process_entity(self, data):
         try:
             js_object = json.loads(data)
 
@@ -53,6 +54,31 @@ class JsonProcessingStrategy(Strategy):
 
         except Exception as e:
             LOGGER.error(e)
+
+    # @singledispatch
+    # def process(self, data):
+        # pass
+
+    # @process.register(str)
+    def _(self, data):
+        try:
+            return self.process_entity(data)
+
+        except Exception as e:
+            LOGGER.error(e)
+
+    # @process.register(list)
+    def process(self, data):
+        res = []
+        try:
+            for i in data:
+                res.append(self.process_entity(i))
+
+            return res
+
+        except Exception as e:
+            LOGGER.error(e)
+
 
 
 class XmlProcessingStrategy(Strategy):
