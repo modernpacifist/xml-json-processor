@@ -3,7 +3,6 @@ import xml.etree.ElementTree as ET
 
 from logging import getLogger
 from config import setup_logging
-from functools import singledispatch
 
 
 setup_logging()

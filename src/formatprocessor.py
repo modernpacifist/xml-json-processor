@@ -4,7 +4,6 @@ import xmltodict
 
 from abc import ABC, abstractmethod
 from logging import getLogger
-from functools import singledispatch
 
 # local
 import data_processing
@@ -40,15 +39,15 @@ class Strategy(ABC):
 
 
 class JsonProcessingStrategy(Strategy):
-    def process_entity(self, data):
+    def process_single_entity(self, data):
         try:
             js_object = json.loads(data)
 
-            if 'date' in js_object.keys():
-                js_object['date'] = data_processing.process_date(js_object['date'])
+            if "date" in js_object.keys():
+                js_object["date"] = data_processing.process_date(js_object["date"])
 
-            if 'deadline' in js_object.keys():
-                js_object['deadline'] = data_processing.process_deadline(js_object['deadline'])
+            if "deadline" in js_object.keys():
+                js_object["deadline"] = data_processing.process_deadline(js_object["deadline"])
 
             return js_object
 
@@ -56,12 +55,21 @@ class JsonProcessingStrategy(Strategy):
             LOGGER.error(e)
 
     def process(self, data):
-        res = []
         try:
-            for i in data:
-                res.append(self.process_entity(i))
+            processed_data_list = [self.process_single_entity(i) for i in data]
 
-            return res
+            merged_dict = {}
+            for d in processed_data_list:
+                for key, value in d.items():
+                    if key in merged_dict:
+                        count = 2
+                        while f"{key}_{count}" in merged_dict:
+                            count += 1
+                        key = f"{key}_{count}"
+
+                    merged_dict[key] = value
+
+            return merged_dict
 
         except Exception as e:
             LOGGER.error(e)
@@ -69,7 +77,7 @@ class JsonProcessingStrategy(Strategy):
 
 
 class XmlProcessingStrategy(Strategy):
-    def process(self, data):
+    def process_single_entity(self, data):
         try:
             root = ET.fromstring(data)
 
@@ -80,7 +88,19 @@ class XmlProcessingStrategy(Strategy):
                 if el is not None:
                     el.text = data_processing.process_date(el.text)
 
+            if "deadline" in tags:
+                el = root.find("deadline")
+                if el is not None:
+                    el.text = data_processing.process_deadline(el.text)
+
             return xmltodict.parse(ET.tostring(root))["root"]
+
+        except Exception as e:
+            LOGGER.error(e)
+
+    def process(self, data):
+        try:
+            return [self.process_single_entity(i) for i in data]
 
         except Exception as e:
             LOGGER.error(e)
