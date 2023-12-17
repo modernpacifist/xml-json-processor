@@ -23,8 +23,12 @@ def process_date(date_string):
 def process_deadline(deadline_string):
     try:
         dt_object = dateparser.parse(deadline_string)
+
+        print(dt_object)
+        print(dt_object)
+
         if dt_object is not None:
-            return dt_object.strftime("%Y_%m_%w_%d")
+            return dt_object.strftime("%Y_%m_%W_%d")
 
     except Exception as e:
         LOGGER.warning(f"Date {deadline_string} could not be parsed: {e}")
