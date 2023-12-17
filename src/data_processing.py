@@ -1,3 +1,4 @@
+import re
 import dateparser
 
 from logging import getLogger
@@ -22,6 +23,11 @@ def process_date(date_string):
 
 def process_deadline(deadline_string):
     try:
+        pattern = r"\b(\d+) days\b"
+
+        match = re.search(pattern, deadline_string)
+
+
         return deadline_string
 
     except Exception as e:
