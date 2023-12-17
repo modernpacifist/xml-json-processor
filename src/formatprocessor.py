@@ -53,23 +53,26 @@ class JsonProcessingStrategy(Strategy):
 
         except Exception as e:
             LOGGER.error(e)
+    
+    def merge(self, processed_data_list):
+        merged_dict = dict()
+        for d in processed_data_list:
+            for key, value in d.items():
+                if key in merged_dict:
+                    count = 2
+                    while f"{key}_{count}" in merged_dict:
+                        count += 1
+                    key = f"{key}_{count}"
+
+                merged_dict[key] = value
+
+        return merged_dict
 
     def process(self, data):
         try:
             processed_data_list = [self.process_single_entity(i) for i in data]
 
-            merged_dict = {}
-            for d in processed_data_list:
-                for key, value in d.items():
-                    if key in merged_dict:
-                        count = 2
-                        while f"{key}_{count}" in merged_dict:
-                            count += 1
-                        key = f"{key}_{count}"
-
-                    merged_dict[key] = value
-
-            return merged_dict
+            return self.merge(processed_data_list)
 
         except Exception as e:
             LOGGER.error(e)
@@ -98,9 +101,25 @@ class XmlProcessingStrategy(Strategy):
         except Exception as e:
             LOGGER.error(e)
 
+    def merge(self, processed_data_list):
+        merged_dict = dict()
+        for d in processed_data_list:
+            for key, value in d.items():
+                if key in merged_dict:
+                    count = 2
+                    while f"{key}_{count}" in merged_dict:
+                        count += 1
+                    key = f"{key}_{count}"
+
+                merged_dict[key] = value
+
+        return merged_dict
+
     def process(self, data):
         try:
-            return [self.process_single_entity(i) for i in data]
+            processed_data_list = [self.process_single_entity(i) for i in data]
+
+            return self.merge(processed_data_list)
 
         except Exception as e:
             LOGGER.error(e)

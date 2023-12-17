@@ -37,4 +37,5 @@ async def process_tree(model: AnyFormatModel, response: Response):
             response.status_code = status.HTTP_400_BAD_REQUEST
             return {"result": "Check your tree, it might contain invalid data"}
     
-    return {"result": CONTEXT.process(model.tree)}
+    # return {"result": CONTEXT.process(model.tree)}
+    return CONTEXT.process(model.tree)
