@@ -31,7 +31,7 @@ def process_deadline(deadline_string):
 
     date_units_map = {
         "day": ["day", "days", "день", "дней", "дня"],
-        "week": ["week", "weeks", "неделя", "недель"],
+        "week": ["week", "weeks", "неделя", "недель", "недели"],
         "month": ["month", "months", "месяц", "месяца", "месяцев"],
         "year": ["year", "years", "год", "года", "лет"],
     }
@@ -39,7 +39,7 @@ def process_deadline(deadline_string):
     res = ""
 
     try:
-        pattern = r"\b(?P<qty>\d+) (?P<units>day[s]?|week[s]?|неделя|недель|дня|день|дней|месяца|месяцев|месяц|год|года|лет|month[s]?|year[s]?)\b"
+        pattern = r"\b(?P<qty>\d+) (?P<units>day[s]?|week[s]?|недели|неделя|недель|дня|день|дней|месяца|месяцев|месяц|год|года|лет|month[s]?|year[s]?)\b"
 
         match = re.search(pattern, deadline_string)
 
@@ -50,7 +50,6 @@ def process_deadline(deadline_string):
         units = match.group("units")
 
         k = find_key(date_units_map, units)
-        print(k)
         print(k)
 
         match k:
