@@ -42,15 +42,12 @@ class JsonProcessingStrategy(Strategy):
     def process(self, data):
         try:
             js_object = json.loads(data)
-            print(js_object)
 
             if 'date' in js_object.keys():
                 js_object['date'] = data_processing.process_date(js_object['date'])
 
             if 'deadline' in js_object.keys():
                 js_object['deadline'] = data_processing.process_deadline(js_object['deadline'])
-
-            print(type(js_object))
 
             return js_object
 
