@@ -1,86 +1,32 @@
 import json
 import xml.etree.ElementTree as ET
-import xmltodict
 
-from abc import ABC, abstractmethod
-
-# local
-import data_processing
+from logging import getLogger
+from config import setup_logging
 
 
-class FormatProcessor:
-    def __init__(self, strategy):
-        self._strategy = strategy
+setup_logging()
 
-    @property
-    def strategy(self):
-        return self._strategy
-
-    @strategy.setter
-    def strategy(self, strategy):
-        self._strategy = strategy
-
-    def process(self, data):
-        return self._strategy.process(data)
+LOGGER = getLogger(__name__)
 
 
-class Strategy(ABC):
-    @abstractmethod
-    def process(self, data):
-        pass
-
-
-class JsonProcessingStrategy(Strategy):
-    def process(self, data):
+class FormatHandler:
+    @staticmethod
+    def determine_format(data):
         try:
-            js_object = json.loads(data)
-            print(js_object)
+            json.loads(data)
+            return "json"
 
-            if 'date' in js_object.keys():
-                js_object['date'] = data_processing.process_date(js_object['date'])
+        except ValueError:
+            LOGGER.warning("determine_format: could not load data as json")
+            pass
 
-            print(type(js_object))
-
-            return js_object
-
-        except Exception as e:
-            print(e)
-
-
-class XmlProcessingStrategy(Strategy):
-    def process(self, data):
         try:
-            root = ET.fromstring(data)
+            ET.fromstring(data)
+            return "xml"
+        
+        except ET.ParseError:
+            LOGGER.warning("determine_format: could not load data as xml")
+            pass
 
-            tags = [i.tag for i in root]
-
-            if "date" in tags:
-                el = root.find("date")
-                if el is not None:
-                    el.text = data_processing.process_date(el.text)
-
-            return xmltodict.parse(ET.tostring(root))["root"]
-
-        except Exception as e:
-            print(e)
-
-
-
-def determine_format(data):
-    try:
-        json.loads(data)
-        return "json"
-
-    except ValueError:
-        LOGGER.warning("determine_format: could not load data as json")
-        pass
-
-    try:
-        ET.fromstring(data)
-        return "xml"
-    
-    except ET.ParseError:
-        LOGGER.warning("determine_format: could not load data as xml")
-        pass
-
-    return "Unknown"
+        return "Unknown"

@@ -1,8 +1,16 @@
+from logging import getLogger
 from fastapi import FastAPI, Response, status
 from models import AnyFormatModel
-from formathandler import FormatProcessor, JsonProcessingStrategy, XmlProcessingStrategy
 
-import data_processing
+from formatprocessor import FormatProcessor, JsonProcessingStrategy, XmlProcessingStrategy
+from formathandler import FormatHandler
+
+from config import setup_logging
+
+
+setup_logging()
+
+LOGGER = getLogger(__name__)
 
 app = FastAPI()
 
@@ -17,7 +25,7 @@ async def read_root():
 
 @app.post("/api/tree", status_code=200)
 async def process_tree(model: AnyFormatModel, response: Response):
-    match data_processing.determine_format(model.tree):
+    match FormatHandler.determine_format(model.tree):
         case "json":
             CONTEXT.strategy = JsonProcessingStrategy()
 

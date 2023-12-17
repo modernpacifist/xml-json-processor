@@ -1,20 +1,31 @@
 import dateparser
-import json
-import xml.etree.ElementTree as ET
 
-from config import LOGGER
-
-# LOGGER = logging.getLogger(__name__)
+from logging import getLogger
+from config import setup_logging
 
 
+setup_logging()
+
+LOGGER = getLogger(__name__)
 
 
 def process_date(date_string):
     try:
-        dt_object = dateparser.parse(date_string, date_formats=["%d.%m.%Y"])
+        dt_object = dateparser.parse(date_string)
         if dt_object is not None:
-            return dt_object.strftime("%m-%d-%Y")
+            return dt_object.strftime("%d-%m-%Y")
 
     except Exception as e:
-        LOGGER.warning(f"{e}")
+        LOGGER.warning(f"Date {date_string} could not be parsed: {e}")
+        return ""
+
+
+def process_deadline(deadline_string):
+    try:
+        dt_object = dateparser.parse(deadline_string)
+        if dt_object is not None:
+            return dt_object.strftime("%Y_%m_%w_%d")
+
+    except Exception as e:
+        LOGGER.warning(f"Date {deadline_string} could not be parsed: {e}")
         return ""
